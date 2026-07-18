@@ -24,7 +24,7 @@ test("server-renders the original cinematic system and resilient first scene", a
 });
 
 test("renders key navigation destinations", async () => {
-  for (const path of ["/about", "/studio", "/studio/portfolio", "/studio/portfolio/arcadian-courtyard", "/contact", "/partnerships", "/investors", "/intelligence", "/enterprise"]) {
+  for (const path of ["/about", "/studio", "/studio/portfolio", "/studio/portfolio/arcadian-courtyard", "/studio/portfolio/mapou-madagascar", "/studio/portfolio/the-living-field-nigeria", "/studio/portfolio/mapou-dominican-republic", "/booking", "/contact", "/partnerships", "/investors", "/intelligence", "/enterprise"]) {
     const response = await render(path);
     assert.equal(response.status, 200, path);
   }
