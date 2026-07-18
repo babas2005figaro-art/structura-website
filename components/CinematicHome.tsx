@@ -54,7 +54,10 @@ export function CinematicHome(){
     const ctx=gsap.context(()=>{
       const hero=gsap.timeline({scrollTrigger:{trigger:'.cinematic-hero',start:'top top',end:'+=380%',scrub:1,pin:true}});
       hero.from('.coordinate',{opacity:0,duration:.4}).from('.draft-grid i',{scaleX:0,scaleY:0,stagger:.04,duration:1},0)
-        .from('.tower-canvas',{opacity:0,scale:.8,duration:1},.4).to('.tower-canvas',{scale:1.08,y:'-3%',duration:2},1)
+        .from('.construction-site',{opacity:0,scale:.75,duration:.45},.2).from('.foundation-lines i',{scaleX:0,stagger:.08,duration:.55},.45)
+        .from('.column-field i',{scaleY:0,transformOrigin:'bottom',stagger:.025,duration:.65},.7).from('.floor-field i',{scaleX:0,stagger:.04,duration:.6},.95)
+        .from('.facade-field i',{x:30,opacity:0,stagger:.025,duration:.55},1.2).from('.landscape-particles i',{scale:0,stagger:.02,duration:.45},1.5)
+        .from('.tower-canvas',{opacity:0,scale:.8,duration:1},1.15).to('.tower-canvas',{scale:1.08,y:'-3%',duration:2},1.5)
         .from('.hero-copy',{opacity:0,y:70,duration:1},2.1).to('.hero-copy',{y:-25,duration:1},3);
       gsap.utils.toArray<HTMLElement>('.world').forEach((section)=>{
         const objects=section.querySelectorAll('.depth');
@@ -74,6 +77,7 @@ export function CinematicHome(){
   return <div ref={root} className="cinematic-home">
     <section className="cinematic-hero">
       <DraftGrid/><span className="coordinate c1">X 04.218 / Y 16.802</span><span className="coordinate c2">DATUM +00.000</span>
+      <div className="construction-site" aria-hidden="true"><div className="foundation-lines">{Array.from({length:4}).map((_,i)=><i key={i}/>)}</div><div className="column-field">{Array.from({length:12}).map((_,i)=><i key={i}/>)}</div><div className="floor-field">{Array.from({length:7}).map((_,i)=><i key={i}/>)}</div><div className="facade-field">{Array.from({length:13}).map((_,i)=><i key={i}/>)}</div><div className="landscape-particles">{Array.from({length:16}).map((_,i)=><i key={i}/>)}</div></div>
       <div className="tower-fallback" aria-hidden="true"><i/><i/><i/><i/><i/></div><div className="tower-canvas"><SceneBoundary><TowerScene/></SceneBoundary></div>
       <div className="hero-index"><span>STRUCTŪRA / 2026</span><span>ARCHITECTURE · INTELLIGENCE · SYSTEMS</span></div>
       <motion.div className="hero-copy" initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.6,duration:1}}><p>AN INTEGRATED PRACTICE FOR THE BUILT WORLD</p><h1>From intelligence<br/>to <em>structure.</em></h1><div className="hero-bottom"><p>Architecture, real-estate intelligence and enterprise systems built for consequential decisions.</p><a href="#intelligence">Enter the structure <span>↓</span></a></div></motion.div>
