@@ -13,4 +13,4 @@ function Tower(){
     <mesh position={[-.65,-1.2,0]} scale={[2.75,.08,1.7]}><boxGeometry/><meshStandardMaterial color="#d7d0c3"/></mesh>
   </group>;
 }
-export default function TowerScene({onReady}:{onReady?:()=>void}){return <Canvas frameloop="demand" dpr={[1,1.35]} gl={{antialias:true,alpha:true,powerPreference:'high-performance'}} onCreated={()=>onReady?.()}><PerspectiveCamera makeDefault position={[5,2.2,8]} fov={35}/><ambientLight intensity={2.2}/><directionalLight position={[4,8,7]} intensity={3} color="#fff5dc"/><directionalLight position={[-4,1,2]} intensity={1} color="#b8d9ee"/><Tower/></Canvas>}
+export default function TowerScene(){return <Canvas frameloop="demand" dpr={[1,1.35]} gl={{antialias:true,alpha:true,powerPreference:'high-performance'}}><PerspectiveCamera makeDefault position={[5,2.2,8]} fov={35}/><ambientLight intensity={2.2}/><directionalLight position={[4,8,7]} intensity={3} color="#fff5dc"/><directionalLight position={[-4,1,2]} intensity={1} color="#b8d9ee"/><Tower/></Canvas>}

@@ -9,17 +9,18 @@ async function render(path = "/") {
   return worker.fetch(new Request(`http://localhost${path}`, { headers: { accept: "text/html" } }), { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } }, { waitUntil() {}, passThroughOnException() {} });
 }
 
-test("server-renders the cinematic homepage and resilient first scene", async () => {
+test("server-renders the original cinematic system and resilient first scene", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.match(html, /From intelligence/);
-  assert.match(html, /hero-fallback/);
-  assert.match(html, /STRUCTŪRA INTELLIGENCE/);
-  assert.match(html, /THE HOUSE OF THE ARCHITECT/);
-  assert.match(html, /Skyline/);
+  assert.match(html, /tower-fallback/);
+  assert.match(html, /INTELLIGENCE/);
+  assert.match(html, /STUDIO/);
+  assert.match(html, /Matter holds/);
+  assert.match(html, /Arcadian/);
   assert.match(html, /204 Rue du St-Sacrement/);
-  assert.doesNotMatch(html, /Your site is taking shape|Codex is working/);
+  assert.doesNotMatch(html, /Skyline Sovereignty|House of the Architect|practice-statement/);
 });
 
 test("renders key navigation destinations", async () => {
@@ -29,7 +30,7 @@ test("renders key navigation destinations", async () => {
   }
 });
 
-test("keeps animation cleanup, mobile fallback and configurable product links", async () => {
+test("keeps cleanup, mobile fallback and configurable product links", async () => {
   const [home, css, env] = await Promise.all([
     readFile(new URL("../components/CinematicHome.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
@@ -37,10 +38,10 @@ test("keeps animation cleanup, mobile fallback and configurable product links", 
   ]);
   assert.match(home, /ctx\.revert\(\)/);
   assert.match(home, /ScrollTrigger/);
-  assert.match(home, /WebGLBoundary/);
+  assert.match(home, /SceneBoundary/);
+  assert.match(home, /case-map[\s\S]*opacity:0/);
   assert.match(home, /NEXT_PUBLIC_INTELLIGENCE_URL/);
   assert.match(home, /NEXT_PUBLIC_ENTERPRISE_SUITE_URL/);
-  assert.match(home, /studio-guides[\s\S]*opacity:0/);
   assert.match(css, /prefers-reduced-motion/);
   assert.match(css, /max-width:900px/);
   assert.match(css, /overflow:clip/);
