@@ -42,6 +42,8 @@ function StudioInterface() {
   </div>;
 }
 
+function HeroArcadian(){return <div className="hero-arcadian" aria-hidden="true"><div className="hero-arcadian-render"/><div className="hero-arcadian-map"><DraftGrid/></div><div className="hero-arcadian-lines"><i/><i/><i/><i/><i/><i/></div><div className="hero-arcadian-massing"><span/><span/><span/><span/></div><div className="hero-arcadian-wire"/><div className="hero-arcadian-landscape">{Array.from({length:10}).map((_,i)=><i key={i}/>)}</div><div className="hero-arcadian-progress"><span>01 SITE</span><span>02 MASS</span><span>03 GRID</span><span>04 FAÇADE</span><span>05 LANDSCAPE</span><span>06 BUILDING</span></div></div>}
+
 function MaterialWorld(){return <section className="material-world"><span className="chapter-no">PASSAGE / MATERIAL</span><div className="material-stage" aria-hidden="true"><div className="material-object stone-object"><i/></div><div className="material-object glass-object"><i/></div><div className="material-object metal-object"><i/></div><div className="material-shadow"/></div><div className="material-copy"><p>STONE · GLASS · METAL · LIGHT</p><h2>Matter holds<br/><em>the idea.</em></h2><p>Weight, reflection and structure composed as one continuous atmosphere.</p></div></section>}
 
 export function CinematicHome(){
@@ -53,14 +55,12 @@ export function CinematicHome(){
     if(reduced || mobile) return;
     const ctx=gsap.context(()=>{
       const hero=gsap.timeline({scrollTrigger:{trigger:'.cinematic-hero',start:'top top',end:'+=380%',scrub:1,pin:true}});
-      hero.from('.coordinate',{opacity:0,duration:.4}).from('.draft-grid i',{scaleX:0,scaleY:0,stagger:.04,duration:1},0)
-        .from('.construction-site',{opacity:0,scale:.75,duration:.45},.2).from('.foundation-lines i',{scaleX:0,stagger:.08,duration:.55},.45)
-        .from('.column-field i',{scaleY:0,transformOrigin:'bottom',stagger:.025,duration:.65},.7).from('.floor-field i',{scaleX:0,stagger:.04,duration:.6},.95)
-        .from('.facade-field i',{x:30,opacity:0,stagger:.025,duration:.55},1.2).from('.landscape-particles i',{scale:0,stagger:.02,duration:.45},1.5)
-        .from('.hero-building-frame i',{scaleY:0,transformOrigin:'bottom',stagger:.04,duration:.55},.7)
-        .fromTo('.hero-building picture',{clipPath:'inset(100% 0 0 0)',filter:'saturate(.2) brightness(1.15)'},{clipPath:'inset(0% 0 0 0)',filter:'saturate(.8) brightness(.95)',duration:1.2},1.45)
-        .to('.construction-site,.hero-building-frame',{opacity:0,duration:.55},2.35).to('.hero-building',{scale:1.045,y:'-2%',duration:1.3},2.1)
-        .from('.hero-copy',{opacity:0,y:70,duration:1},2.1).to('.hero-copy',{y:-25,duration:1},3);
+      hero.from('.coordinate',{opacity:0,duration:.35}).from('.hero-arcadian-map',{opacity:0,scale:1.12,duration:.7},0)
+        .from('.hero-arcadian-lines i',{scaleX:0,stagger:.06,duration:.6},.2).from('.hero-arcadian-massing span',{opacity:0,y:90,stagger:.1,duration:.75},.65)
+        .to('.hero-arcadian-wire',{opacity:.42,duration:.45},1.2).from('.hero-arcadian-landscape i',{scale:0,stagger:.03,duration:.5},1.35)
+        .fromTo('.hero-arcadian-render',{clipPath:'inset(100% 0 0 0)',scale:1.13,filter:'brightness(.8) blur(3px)'},{clipPath:'inset(0% 0 0 0)',scale:1,filter:'brightness(.95) blur(0px)',duration:1.25},1.65)
+        .to('.hero-arcadian-map,.hero-arcadian-lines,.hero-arcadian-massing,.hero-arcadian-wire',{opacity:0,filter:'blur(7px)',duration:.5},2.45)
+        .from('.hero-copy',{opacity:0,y:70,duration:.85},2.25).to('.hero-copy',{y:-25,duration:1},3);
       gsap.utils.toArray<HTMLElement>('.world').forEach((section)=>{
         const objects=section.querySelectorAll('.depth');
         gsap.fromTo(objects,{y:(i)=>55+i*38,opacity:.5,rotateX:6},{y:(i)=>-30-i*35,opacity:1,rotateX:0,stagger:.08,ease:'none',immediateRender:false,scrollTrigger:{trigger:section,start:'top 92%',end:'bottom 15%',scrub:1}});
@@ -78,6 +78,7 @@ export function CinematicHome(){
   },[]);
   return <div ref={root} className="cinematic-home">
     <section className="cinematic-hero">
+      <HeroArcadian/>
       <span className="coordinate c1">X 04.218 / Y 16.802</span><span className="coordinate c2">DATUM +00.000</span>
       <div className="construction-site" aria-hidden="true"><div className="foundation-lines">{Array.from({length:4}).map((_,i)=><i key={i}/>)}</div><div className="column-field">{Array.from({length:12}).map((_,i)=><i key={i}/>)}</div><div className="floor-field">{Array.from({length:7}).map((_,i)=><i key={i}/>)}</div><div className="facade-field">{Array.from({length:13}).map((_,i)=><i key={i}/>)}</div><div className="landscape-particles">{Array.from({length:16}).map((_,i)=><i key={i}/>)}</div></div>
       <div className="hero-building" aria-hidden="true"><picture><source type="image/avif" srcSet="/projects/courtyard-960.avif 960w, /projects/courtyard-1920.avif 1920w"/><img src="/projects/courtyard-1920.webp" alt="" fetchPriority="high"/></picture><div className="hero-building-frame"><i/><i/><i/><i/><i/><i/></div></div>
