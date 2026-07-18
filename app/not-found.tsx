@@ -1,0 +1,1 @@
+import Link from 'next/link';export default function NotFound(){return <section className="not-found"><b>404</b><p className="kicker">Coordinate not found</p><h1>This part of the structure does not exist.</h1><Link className="button dark" href="/">Return home</Link></section>}

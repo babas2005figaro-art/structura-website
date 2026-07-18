@@ -1,0 +1,2 @@
+import {NextResponse} from 'next/server';
+export async function POST(request:Request){const form=await request.formData();if(form.get('website'))return NextResponse.json({ok:true});const email=String(form.get('email')||'');const message=String(form.get('message')||'');if(!/^\S+@\S+\.\S+$/.test(email)||message.length<10)return NextResponse.json({error:'Please provide a valid email and message.'},{status:400});return NextResponse.json({ok:true,message:'Inquiry received. Connect this endpoint to your approved mail or CRM provider before launch.'})}
