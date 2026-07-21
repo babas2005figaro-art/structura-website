@@ -54,7 +54,7 @@ export function CinematicHome(){
     const mobile=window.matchMedia('(max-width: 900px)').matches;
     if(reduced || mobile) return;
     const ctx=gsap.context(()=>{
-      const hero=gsap.timeline({scrollTrigger:{trigger:'.cinematic-hero',start:'top top',end:'+=380%',scrub:1,pin:true}});
+      const hero=gsap.timeline({scrollTrigger:{trigger:'.cinematic-hero',start:'top top',end:'+=190%',scrub:.65,pin:true,anticipatePin:1}});
       hero.from('.coordinate',{opacity:0,duration:.35}).from('.hero-arcadian-map',{opacity:0,scale:1.12,duration:.7},0)
         .from('.hero-arcadian-lines i',{scaleX:0,stagger:.06,duration:.6},.2).from('.hero-arcadian-massing span',{opacity:0,y:90,stagger:.1,duration:.75},.65)
         .to('.hero-arcadian-wire',{opacity:.42,duration:.45},1.2).from('.hero-arcadian-landscape i',{scale:0,stagger:.03,duration:.5},1.35)
@@ -63,12 +63,12 @@ export function CinematicHome(){
         .from('.hero-copy',{opacity:0,y:70,duration:.85},2.25).to('.hero-copy',{y:-25,duration:1},3);
       gsap.utils.toArray<HTMLElement>('.world').forEach((section)=>{
         const objects=section.querySelectorAll('.depth');
-        gsap.fromTo(objects,{y:(i)=>55+i*38,opacity:.5,rotateX:6},{y:(i)=>-30-i*35,opacity:1,rotateX:0,stagger:.08,ease:'none',immediateRender:false,scrollTrigger:{trigger:section,start:'top 92%',end:'bottom 15%',scrub:1}});
-        gsap.fromTo(section.querySelector('.world-copy'),{y:90},{y:-60,ease:'none',scrollTrigger:{trigger:section,start:'top bottom',end:'bottom top',scrub:1}});
+        gsap.fromTo(objects,{y:(i)=>55+i*38,opacity:.5,rotateX:6},{y:(i)=>-30-i*35,opacity:1,rotateX:0,stagger:.08,ease:'none',immediateRender:false,scrollTrigger:{trigger:section,start:'top 92%',end:'bottom 15%',scrub:.65}});
+        gsap.fromTo(section.querySelector('.world-copy'),{y:90},{y:-60,ease:'none',scrollTrigger:{trigger:section,start:'top bottom',end:'bottom top',scrub:.65}});
       });
       const matter=gsap.timeline({scrollTrigger:{trigger:'.material-world',start:'top 78%',end:'bottom 18%',scrub:1}});
       matter.from('.stone-object',{x:'-18vw',rotateY:-18,opacity:.25},0).from('.glass-object',{y:'24vh',rotateX:18,opacity:.2},0).from('.metal-object',{x:'16vw',rotateY:22,opacity:.2},0).from('.material-copy',{y:90,opacity:.35},.15).to('.material-stage',{scale:1.06,y:-25},.6);
-      const portfolio=gsap.timeline({scrollTrigger:{trigger:'.case-study',start:'top top',end:'+=500%',pin:true,scrub:1}});
+      const portfolio=gsap.timeline({scrollTrigger:{trigger:'.case-study',start:'top top',end:'+=285%',pin:true,scrub:.7,anticipatePin:1}});
       portfolio.from('.case-map',{opacity:0,scale:1.25}).to('.case-map',{opacity:.25,scale:1},.8)
         .from('.case-lines i',{scaleX:0,stagger:.08},.3).from('.case-massing span',{opacity:0,y:100,stagger:.12},.8)
         .to('.case-wire',{opacity:.2},1.4).fromTo('.case-render',{clipPath:'inset(100% 0 0 0)',scale:1.14,filter:'brightness(.8) blur(3px)'},{clipPath:'inset(0% 0 0 0)',scale:1,filter:'brightness(1.02) blur(0px)',duration:1.4},2.2)
