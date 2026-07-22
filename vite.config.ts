@@ -12,7 +12,6 @@ const { d1, r2 } = hostingConfig;
 
 // macOS Seatbelt blocks FSEvents, so Codex previews need polling for HMR.
 const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";
-const isVercelNitroBuild = process.env.NITRO_PRESET === "vercel";
 const tailwindStylesheet = fileURLToPath(
   new URL("./node_modules/tailwindcss/index.css", import.meta.url),
 );
@@ -39,14 +38,22 @@ const localBindingConfig = {
     : [],
 };
 
-export default defineConfig(async () => {
+export default defineConfig(async ({ command }) => {
   // Keep Wrangler and Miniflare state project-local. These are non-secret tool
   // settings; application environment belongs in ignored `.env*` files.
   process.env.WRANGLER_WRITE_LOGS ??= "false";
   process.env.WRANGLER_LOG_PATH ??= ".wrangler/logs";
   process.env.MINIFLARE_REGISTRY_PATH ??= ".wrangler/registry";
 
-  const targetPlugins = isVercelNitroBuild
+  // Production is deployed by Vercel. Selecting Nitro here also makes local
+  // production builds emit the exact same deployment artifact as Vercel CI.
+  // Keep the native Cloudflare plugin only for the local vinext dev server.
+  const isProductionBuild = command === "build";
+  if (isProductionBuild) {
+    process.env.NITRO_PRESET = "vercel";
+  }
+
+  const targetPlugins = isProductionBuild
     ? [nitro()]
     : [
         sites(),
@@ -59,7 +66,7 @@ export default defineConfig(async () => {
       ];
 
   return {
-    resolve: isVercelNitroBuild
+    resolve: isProductionBuild
       ? { alias: { tailwindcss: tailwindStylesheet } }
       : undefined,
     server: isCodexSeatbeltSandbox
